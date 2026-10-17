@@ -1,0 +1,35 @@
+package com.pierreruiz.inventory;
+
+import java.util.Objects;
+
+public class Product{
+    private final long id;
+    private final String name;
+    private int stock;
+
+    public Product(long id, String name, int stock){
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be greater than zero.");
+        }
+        if (stock < 0) {
+            throw new IllegalArgumentException("Stock cannot be negative.");
+        }
+        this.id = id;
+        this.name = Objects.requireNonNull(name, "Name must not be null").trim();
+        if (this.name.isEmpty()) {
+            throw new IllegalArgumentException("Name must not be empty.");
+        }
+        this.stock = stock;
+    }
+
+    public long getId() {return id; }
+    public String getName() { return name; }
+    public int getStock() { return stock; }
+
+    public void addStock(int amount){
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than zero.");
+        }
+        this.stock = Math.addExact(this.stock, amount);
+    }
+}
