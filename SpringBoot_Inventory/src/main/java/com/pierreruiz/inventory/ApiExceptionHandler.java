@@ -2,8 +2,13 @@ package com.pierreruiz.inventory;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -21,5 +26,21 @@ public class ApiExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ProblemDetail handleIllegal(IllegalArgumentException exception){
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleValidation(MethodArgumentNotValidException exception){
+        List<String> errors = new ArrayList<>();
+
+        for(var error : exception.getBindingResult().getFieldErrors()){
+            errors.add(error.getField() + ":" + error.getDefaultMessage());
+        }
+
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                "Request validation failed");
+
+        problem.setProperty("errors", errors);
+        return problem;
     }
 }

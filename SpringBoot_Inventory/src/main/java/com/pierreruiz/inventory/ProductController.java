@@ -1,5 +1,7 @@
 package com.pierreruiz.inventory;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,9 @@ public class ProductController {
         this.inventoryService = inventoryService;
     }
 
-    public record AddStockRequest(int amount){
+    public record AddStockRequest(
+            @Positive(message = "Amount must be greater than zero")
+            int amount){
     }
 
     @GetMapping("/available")
@@ -37,7 +41,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody CreateProductRequest request) {
         Product product = new Product(
                 request.id(),
                 request.name(),
@@ -56,7 +60,7 @@ public class ProductController {
 
     @PostMapping("/{id}/stock")
     public ResponseEntity<Void> addStock(@PathVariable("id") long id,
-                                         @RequestBody AddStockRequest request){
+                                         @Valid @RequestBody AddStockRequest request){
         inventoryService.addStock(id, request.amount());
         return ResponseEntity.noContent().build();
     }
