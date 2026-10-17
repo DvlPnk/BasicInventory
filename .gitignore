@@ -69,3 +69,6 @@ replay_pid*
 .env
 .env.*
 !.env.example
+
+# Local database files
+**/data/
