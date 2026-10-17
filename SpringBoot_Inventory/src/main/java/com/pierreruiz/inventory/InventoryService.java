@@ -19,9 +19,7 @@ public class InventoryService{
         Objects.requireNonNull(product, "Product must not be null.");
 
         if (repository.existsById(product.getId())) {
-            throw new IllegalArgumentException(
-                    "Product already exists: " + product.getId()
-            );
+            throw new DuplicateProductException(product.getId());
         }
 
         repository.save(product);
@@ -33,9 +31,7 @@ public class InventoryService{
 
     public void removeProduct(long id){
         if (!repository.existsById(id)) {
-            throw new IllegalArgumentException(
-                    "Product with id " + id + " does not exist: "
-            );
+            throw new ProductNotFoundException(id);
         }
 
         repository.deleteById(id);
@@ -53,10 +49,7 @@ public class InventoryService{
 
     public void addStock(long productId, int amount) {
         Product product = repository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Product not found: " + productId
-                ));
-
+                .orElseThrow(() -> new ProductNotFoundException(productId));
         product.addStock(amount);
     }
 }
