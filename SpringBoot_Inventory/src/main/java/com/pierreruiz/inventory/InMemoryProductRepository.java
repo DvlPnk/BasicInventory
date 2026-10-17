@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 
-@Repository
 public class InMemoryProductRepository implements ProductRepository
 {
     private final Map<Long, Product> products = new HashMap<>();

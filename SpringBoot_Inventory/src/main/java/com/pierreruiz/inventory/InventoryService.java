@@ -1,5 +1,6 @@
 package com.pierreruiz.inventory;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -47,6 +48,7 @@ public class InventoryService{
         return products;
     }
 
+    @Transactional
     public void addStock(long productId, int amount) {
         Product product = repository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
