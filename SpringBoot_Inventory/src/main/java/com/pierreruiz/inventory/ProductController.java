@@ -64,4 +64,17 @@ public class ProductController {
         inventoryService.addStock(id, request.amount());
         return ResponseEntity.noContent().build();
     }
+
+    public record RemoveStockRequest(
+            @Positive(message = "Amount must be greater than zero")
+            int amount
+    ){
+    }
+
+    @PostMapping("/{id}/stock/deduct")
+    public ResponseEntity<Void> removeStock(@PathVariable("id") long id,
+                                            @Valid @RequestBody RemoveStockRequest request){
+        inventoryService.removeStock(id, request.amount());
+        return ResponseEntity.noContent().build();
+    }
 }

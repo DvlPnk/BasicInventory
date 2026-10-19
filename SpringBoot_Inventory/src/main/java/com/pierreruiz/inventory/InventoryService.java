@@ -54,4 +54,11 @@ public class InventoryService{
                 .orElseThrow(() -> new ProductNotFoundException(productId));
         product.addStock(amount);
     }
+
+    @Transactional
+    public void removeStock(long productId, int amount){
+        Product product = repository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+        product.removeStock(amount);
+    }
 }

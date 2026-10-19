@@ -2,10 +2,13 @@ package com.pierreruiz.inventory;
 
 import java.util.Objects;
 
+import com.sun.nio.sctp.IllegalReceiveException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import javax.naming.InsufficientResourcesException;
 
 @Entity
 @Table(name = "products")
@@ -18,7 +21,6 @@ public class Product{
     private int stock;
 
     protected Product(){
-        
     }
 
     public Product(long id, String name, int stock){
@@ -45,5 +47,17 @@ public class Product{
             throw new IllegalArgumentException("Amount must be greater than zero.");
         }
         this.stock = Math.addExact(this.stock, amount);
+    }
+
+    public void removeStock(int amount){
+        if(amount <= 0){
+            throw new IllegalArgumentException("Amount must be greater than zero.");
+        }
+
+        if(stock < amount){
+            throw new InsufficientStockException(id);
+        }
+
+        this.stock = Math.subtractExact(this.stock, amount);
     }
 }
