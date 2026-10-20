@@ -10,7 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:h2:mem:inventory-tests",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "INVENTORY_READER_PASSWORD=test-reader-password",
+        "INVENTORY_ADMIN_PASSWORD=test-admin-password"
 })
 class InventoryPersistenceTest {
 

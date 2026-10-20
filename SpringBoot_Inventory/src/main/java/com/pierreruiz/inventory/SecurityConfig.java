@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Configuration
 public class SecurityConfig {
     @Bean
@@ -20,14 +22,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService users(PasswordEncoder encoder) {
+    public UserDetailsService users(PasswordEncoder encoder,
+                                    @Value("${INVENTORY_READER_PASSWORD}") String readerPassword,
+                                    @Value("${INVENTORY_ADMIN_PASSWORD}") String adminPassword) {
         var reader = User.withUsername("reader")
-                .password(encoder.encode("reader123"))
+                .password(encoder.encode(readerPassword))
                 .roles("USER")
                 .build();
 
         var admin = User.withUsername("admin")
-                .password(encoder.encode("admin123"))
+                .password(encoder.encode(adminPassword))
                 .roles("ADMIN")
                 .build();
 
