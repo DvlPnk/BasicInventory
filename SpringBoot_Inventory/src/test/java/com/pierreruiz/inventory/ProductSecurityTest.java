@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(properties = {
-        "spring.datasource.ulr=jdbc:h2:mem:security-tests",
+        "spring.datasource.url=jdbc:h2:mem:security-tests",
         "spring.jpa.hibernate.ddl-auto=create-drop",
         "server.ssl.enabled=false",
         "INVENTORY_READER_PASSWORD=test-reader-password",
@@ -47,6 +47,7 @@ public class ProductSecurityTest {
                 .apply(springSecurity()).build();
     }
 
+    @Test
     void unauthenticatedCannotReadProducts() throws Exception {
         mvc.perform(get("/products/available")
                 .accept(MediaType.APPLICATION_JSON))

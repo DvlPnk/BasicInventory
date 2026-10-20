@@ -2,13 +2,11 @@ package com.pierreruiz.inventory;
 
 import java.util.Objects;
 
-import com.sun.nio.sctp.IllegalReceiveException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import javax.naming.InsufficientResourcesException;
 
 @Entity
 @Table(name = "products")
