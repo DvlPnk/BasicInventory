@@ -44,7 +44,12 @@ public class Product{
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount must be greater than zero.");
         }
-        this.stock = Math.addExact(this.stock, amount);
+        try{
+            this.stock = Math.addExact(this.stock, amount);
+        }
+        catch (ArithmeticException e){
+            throw new StockOverflowException("Stock limit exceeded");
+        }
     }
 
     public void removeStock(int amount){

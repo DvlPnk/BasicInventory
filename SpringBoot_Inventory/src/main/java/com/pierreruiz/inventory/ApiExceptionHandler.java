@@ -48,4 +48,9 @@ public class ApiExceptionHandler {
     public ProblemDetail handleInsufficientStock(InsufficientStockException exception){
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
     }
+
+    @ExceptionHandler(StockOverflowException.class)
+    public ProblemDetail handleStockOverflow(StockOverflowException exception){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
+    }
 }
