@@ -74,5 +74,6 @@ replay_pid*
 **/data/
 
 # Local TLS keys
+inventory-local.cer
 *.p12
 *.jks
