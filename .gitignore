@@ -72,3 +72,7 @@ replay_pid*
 
 # Local database files
 **/data/
+
+# Local TLS keys
+*.p12
+*.jks
